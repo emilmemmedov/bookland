@@ -61,7 +61,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $e)
     {
-        //todo: send to sentry
         if ($e instanceof ValidationException) {
             $errors = $e->validator->getMessageBag();
             return $this->respond('Validation Failed', $errors, ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
@@ -75,9 +74,9 @@ class Handler extends ExceptionHandler
         else if ($e instanceof BadRequestException) {
             return $this->respond('Bad request', [], ResponseAlias::HTTP_BAD_REQUEST);
         }
-        else if ($e instanceof \RuntimeException) {
-            return $this->respond('Bad request', $e->getMessage(), ResponseAlias::HTTP_BAD_REQUEST);
-        }
+//        else if ($e instanceof \RuntimeException) {
+//            return $this->respond('Bad request', $e->getMessage(), ResponseAlias::HTTP_BAD_REQUEST);
+//        }
         else {
             if (env('APP_DEBUG')) {
                 return parent::render($request, $e);
