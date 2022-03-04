@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use App\Traits\ApiResponder;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -76,6 +77,9 @@ class Handler extends ExceptionHandler
             return $this->respond('Bad request', [], ResponseAlias::HTTP_BAD_REQUEST);
         }
         else if ($e instanceof AuthenticationException) {
+            return $this->respond('Unauthorized', $e->getMessage(), ResponseAlias::HTTP_FORBIDDEN);
+        }
+        else if ($e instanceof AuthorizationException) {
             return $this->respond('Unauthorized', $e->getMessage(), ResponseAlias::HTTP_FORBIDDEN);
         }
         else {

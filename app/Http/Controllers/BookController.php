@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\UserBook;
 use App\Traits\ApiResponder;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,9 +34,12 @@ class BookController extends Controller
 
     /**
      * @throws ValidationException
+     * @throws AuthorizationException
      */
     public function create(Request $request): JsonResponse
     {
+        $this->authorize('create-book');
+
         $this->validate($request,[
             'title',
             'description'

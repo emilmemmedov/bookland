@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,14 +20,20 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'v1'], function ($app){
     $app->group(['prefix' => 'auth'], function ($app){
+        $app->post('register', [AuthController::class, 'register']);
+
         $app->post('login', [AuthController::class, 'login'])->name('login');
         $app->post('logout', [AuthController::class, 'logout']);
         $app->post('refresh', [AuthController::class, 'refresh']);
     });
 
     $app->group(['prefix' => 'admin', 'middleware' => 'auth'], function ($app){
-        $app->group(['prefix' => 'user'], function ($app){
-            $app->post('/', [UserController::class, 'create']);
+        $app->group(['prefix' => 'publisher'], function ($app){
+            $app->post('/publish', [PublisherController::class, 'create']);
+        });
+
+        $app->group(['prefix' => 'book'], function ($app){
+            $app->post('/', [BookController::class, 'create']);
         });
     });
 

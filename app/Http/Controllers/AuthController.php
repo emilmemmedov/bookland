@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Traits\ApiResponder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Testing\Fluent\Concerns\Has;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -17,7 +20,29 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['login']]);
+        $this->middleware('auth', ['except' => ['login','register']]);
+    }
+
+    /**
+     * @throws ValidationException
+     */
+    public function register(Request $request)
+    {
+        $this->validate($request,[
+            'name' => 'required',
+            'email' => 'required|unique:users,email',
+            'password' => 'required',
+            'type' => 'required|in:' . User::AUTHOR_TYPE . ',' . User::PUBLISHER_TYPE
+        ]);
+
+        User::query()->create([
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'password' => Hash::make($request->get('password')),
+            'type' => $request->get('type')
+        ]);
+
+        return $this->respond('User Saved');
     }
 
     /**
