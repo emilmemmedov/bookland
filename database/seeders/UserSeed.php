@@ -30,6 +30,12 @@ class UserSeed extends Seeder
                 'password' => Hash::make('password2'),
                 'type' => User::AUTHOR_TYPE
             ],
+            [
+                'name' => 'Mary',
+                'email' => 'mary.mary@gmail.com',
+                'password' => Hash::make('password3'),
+                'type' => User::PUBLISHER_TYPE
+            ],
         ];
         DB::table('users')->insert($users);
     }

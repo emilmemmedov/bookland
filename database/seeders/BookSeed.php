@@ -32,7 +32,15 @@ class BookSeed extends Seeder
             ],
         ];
 
+        $publishedBooks = [
+            [
+                'book_id' => 1,
+                'user_id' => 3
+            ]
+        ];
+
         DB::table('user_books')->insert($userBooks);
         DB::table('books')->insert($books);
+        DB::table('user_books')->insert($publishedBooks);
     }
 }
