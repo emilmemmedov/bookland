@@ -4,10 +4,11 @@
 
 <p>    1. cp .env.example .env </p>
 <p>    2. docker-compose -f docker-compose.yml --env-file .docker-env up --build -d </p>
-<p>    3. docker-compose exec app php artisan key:generate </p>
-<p>    4. docker-compose exec app php artisan jwt:secret </p>
-<p>    5. docker-compose exec app php artisan migrate </p>
-<p>    6. docker-compose exec app php artisan db:seed </p>
+<p>    3. docker-compose exec app composer install </p>
+<p>    4. docker-compose exec app php artisan key:generate </p>
+<p>    5. docker-compose exec app php artisan jwt:secret </p>
+<p>    6. docker-compose exec app php artisan migrate </p>
+<p>    7. docker-compose exec app php artisan db:seed </p>
 
 Done.
 
