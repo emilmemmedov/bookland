@@ -12,6 +12,11 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const AUTHOR_TYPE = 1;
+
+    const PUBLISHER_TYPE = 2;
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,6 +28,7 @@ class User extends Authenticatable implements JWTSubject
         'password',
     ];
 
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -31,6 +37,7 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password',
         'remember_token',
+        'pivot'
     ];
 
     /**
